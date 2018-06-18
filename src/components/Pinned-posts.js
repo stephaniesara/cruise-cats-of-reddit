@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Post from "./Post.js";
 
-class TopPosts extends Component {
+class PinnedPosts extends Component {
   constructor(props) {
     super(props);
   }
@@ -10,8 +10,8 @@ class TopPosts extends Component {
     console.log(this.props);
     const posts = this.props.posts;
     return (
-      <div className="Top-posts">
-        <h3>Top</h3>
+      <div className="Pinned-posts">
+        <h3>Pinned</h3>
         <table>
           <tbody>
             {posts.map((post, index) => <Post post={post} key={index} />)}
@@ -22,4 +22,4 @@ class TopPosts extends Component {
   }
 }
 
-export default TopPosts;
+export default PinnedPosts;

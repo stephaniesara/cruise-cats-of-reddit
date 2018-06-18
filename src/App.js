@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
-import TopPosts from "./components/Top-Posts";
+import TopPosts from "./components/Top-posts";
+import PinnedPosts from "./components/Pinned-posts";
 import logo from "./redditcat.jpg";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: []
+      pinned: [],
+      top: []
     };
   }
 
@@ -18,9 +20,9 @@ class App extends Component {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        const posts = data.data.children.slice(0, limit);
+        const top = data.data.children.slice(0, limit);
         this.setState({
-          posts: posts
+          top: top
         });
       })
       .catch(err => {
@@ -29,7 +31,7 @@ class App extends Component {
   }
 
   render() {
-    const { posts } = this.state;
+    const { pinned, top } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -39,7 +41,8 @@ class App extends Component {
           <h1 className="App-title">Cats of Reddit</h1>
         </header>
         <div className="Feed">
-          <TopPosts posts={posts} />
+          {pinned.length > 0 && <PinnedPosts posts={pinned} />}
+          <TopPosts posts={top} />
         </div>
       </div>
     );

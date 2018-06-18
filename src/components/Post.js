@@ -9,11 +9,14 @@ class Post extends Component {
     const { title, permalink } = this.props.post.data;
     const link = `http://reddit.com/${permalink}`;
     return (
-      <div className="Post">
-        <a href={link} target="_blank">
-          {title}
-        </a>
-      </div>
+      <tr className="Post">
+        <td valign="top" />
+        <td>
+          <a href={link} target="_blank">
+            {title}
+          </a>
+        </td>
+      </tr>
     );
   }
 }
