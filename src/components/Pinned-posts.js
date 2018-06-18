@@ -14,7 +14,14 @@ class PinnedPosts extends Component {
         <h3>Pinned</h3>
         <table>
           <tbody>
-            {posts.map((post, index) => <Post post={post} key={index} />)}
+            {posts.map((post, index) => (
+              <Post
+                post={post}
+                key={index}
+                togglePin={this.props.togglePin}
+                state="pinned"
+              />
+            ))}
           </tbody>
         </table>
       </div>

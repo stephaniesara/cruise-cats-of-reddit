@@ -7,14 +7,20 @@ class TopPosts extends Component {
   }
 
   render() {
-    console.log(this.props);
     const posts = this.props.posts;
     return (
       <div className="Top-posts">
         <h3>Top</h3>
         <table>
           <tbody>
-            {posts.map((post, index) => <Post post={post} key={index} />)}
+            {posts.map((post, index) => (
+              <Post
+                post={post}
+                key={index}
+                togglePin={this.props.togglePin}
+                state="top"
+              />
+            ))}
           </tbody>
         </table>
       </div>

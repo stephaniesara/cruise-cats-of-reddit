@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import logo from "./logo.svg";
 import "./App.css";
 import TopPosts from "./components/Top-posts";
 import PinnedPosts from "./components/Pinned-posts";
@@ -10,24 +9,51 @@ class App extends Component {
     super(props);
     this.state = {
       pinned: [],
-      top: []
+      pinnedLinks: {},
+      top: [],
+      limit: 20
     };
+    this.togglePin = this.togglePin.bind(this);
+    this.getTopPosts = this.getTopPosts.bind(this);
   }
 
-  componentDidMount() {
-    const url = "https://www.reddit.com/r/cats/top/.json?count=20";
-    const limit = 20;
+  togglePin(post, state) {
+    let { pinned, pinnedLinks } = this.state;
+    if (state === "top") {
+      pinned.push(post);
+      pinnedLinks[post.data.permalink] = true;
+    } else {
+      pinned = pinned.splice(pinned.indexOf(post), 1);
+      delete pinnedLinks[post.data.permalink];
+    }
+    this.getTopPosts(pinned, pinnedLinks);
+  }
+
+  getTopPosts(pinned, pinnedLinks) {
+    let { limit } = this.state;
+    limit += Object.keys(pinnedLinks).length;
+    const url = `https://www.reddit.com/r/cats/top/.json?limit=${limit}`;
+
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        const top = data.data.children.slice(0, limit);
+        const top = data.data.children;
+        const filteredTop = top.filter(
+          post => pinnedLinks[post.data.permalink] === undefined
+        );
         this.setState({
-          top: top
+          top: filteredTop
         });
+        console.log(top);
       })
       .catch(err => {
         console.log(err);
       });
+  }
+
+  componentDidMount() {
+    const { pinned, pinnedLinks } = this.state;
+    this.getTopPosts(pinned, pinnedLinks);
   }
 
   render() {
@@ -35,14 +61,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          {/* <img src="./redditcat.jpg" /> */}
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Cats of Reddit</h1>
         </header>
         <div className="Feed">
-          {pinned.length > 0 && <PinnedPosts posts={pinned} />}
-          <TopPosts posts={top} />
+          <PinnedPosts posts={pinned} togglePin={this.togglePin} />
+          <TopPosts posts={top} togglePin={this.togglePin} />
         </div>
       </div>
     );
