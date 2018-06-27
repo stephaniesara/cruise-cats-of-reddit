@@ -5,23 +5,14 @@
   "dependencies": {
     "@material-ui/core": "^1.2.1",
     "@material-ui/icons": "^1.1.0",
-    "axios": "^0.18.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-redux": "^5.0.7",
-    "react-scripts": "1.1.4",
-    "redux": "^4.0.0"
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "redux-devtools": "^3.4.1",
-    "redux-logger": "^3.0.6",
-    "redux-promise-middleware": "^5.1.1",
-    "redux-thunk": "^2.3.0"
   }
 }
