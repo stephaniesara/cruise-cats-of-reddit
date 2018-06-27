@@ -37,6 +37,7 @@ class App extends Component {
     fetch(url)
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         const top = data.data.children;
         const filteredTop = top.filter(
           post => pinnedLinks[post.data.permalink] === undefined
